@@ -2,8 +2,11 @@ package com.taghavi.daggerhilttest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -20,6 +23,14 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+@AndroidEntryPoint
+class MyFragment : Fragment() {
+
+    @Inject
+    lateinit var someClass: SomeClass
+}
+
+@ActivityScoped
 class SomeClass
 @Inject
 constructor(
