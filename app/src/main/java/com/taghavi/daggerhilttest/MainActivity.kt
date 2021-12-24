@@ -19,36 +19,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         println(someClass.doAThing())
-        println(someClass.doSomeOtherThing())
     }
-}
-
-@AndroidEntryPoint
-class MyFragment : Fragment() {
-
-    @Inject
-    lateinit var someClass: SomeClass
 }
 
 @ActivityScoped
 class SomeClass
 @Inject
 constructor(
-    private val someOtherClass: SomeOtherClass
+    private val someInterfaceImpl: SomeInterface
 ) {
     fun doAThing(): String {
-        return "Look I did a thing!"
-    }
-
-    fun doSomeOtherThing(): String {
-        return someOtherClass.doSomeOtherThing()
+        return "Look I : ${someInterfaceImpl.getAThing()}"
     }
 }
 
-class SomeOtherClass
+class SomeInterfaceImpl
 @Inject
-constructor() {
-    fun doSomeOtherThing(): String {
-        return "Look I did some other thing!"
+constructor() :SomeInterface {
+    override fun getAThing(): String {
+        return "A Thing!"
     }
+}
+
+interface SomeInterface{
+    fun getAThing():String
 }
