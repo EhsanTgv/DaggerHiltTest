@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.scopes.ActivityScoped
@@ -51,14 +52,19 @@ interface SomeInterface {
     fun getAThing(): String
 }
 
-@InstallIn(ActivityScoped::class)
+@InstallIn(SingletonComponent::class)
 @Module
-abstract class MyModule {
-    @ActivityScoped
-    @Binds
-    abstract fun bindSomeDependency(someImpl: SomeInterfaceImpl): SomeInterface
+class MyModule {
 
-    @ActivityScoped
-    @Binds
-    abstract fun bindGson(gson: Gson): Gson
+    @Singleton
+    @Provides
+    fun provideSomeInterface(): SomeInterface {
+        return SomeInterfaceImpl()
+    }
+
+    @Singleton
+    @Provides
+    fun provideGson(): Gson {
+        return Gson()
+    }
 }
